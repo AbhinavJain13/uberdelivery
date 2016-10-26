@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    welcome to user dashboard
+    <form action="" method="post">
+      {% csrf_token %}
+      <select  name="service">
+        <option value="pick up">Pick Up</option>
+        <option value="delivery">delivery</option>
+        <option value="both">Both</option>
+      </select>
+      <select  name="range">
+        <option value="1">1-5 Miles</option>
+        <option value="2">5-10 Miles</option>
+      </select>
+      {% endif %}
+      <select  name="cuisine">
+        <option value="1">Italian</option>
+        <option value="2">Mexican</option>
+        <option value="3">indian</option>
+      </select>
+    </form>
+  </body>
+</html>

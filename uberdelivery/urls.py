@@ -19,4 +19,5 @@ from django.conf.urls import url, include
 urlpatterns = [
     url(r'^', include('apps.mainapp.urls', namespace="main")),
     url(r'^vendor/', include('apps.vendorapp.urls', namespace="vendor")),
+    url(r'^user/', include('apps.userapp.urls', namespace="user")),
    ]

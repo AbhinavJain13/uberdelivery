@@ -8,5 +8,31 @@
     <h1>Karishma here</h1>
     <h3>harshita here</h3>
     welcome main app
+    <div class="login">
+
+    <h1>
+      Login
+
+    </h1>
+    <form  action="{% url 'main:register' %}" method="post">
+      {% csrf_token %}
+      <select name="member">
+        <option value="vendor">Vendor</option>
+        <option value="user">user</option>
+      </select>
+      <input type="submit" value="register">
+    </form>
+
+    <form class="" action="{% url 'main:login' %}" method="post">
+      {% csrf_token %}
+    <select  name="member">
+      <option value="user">User</option>
+      <option value="vendor">Vendor</option>
+    </select>
+    Email:<input type="text" name="email">
+    Password: <input type="Password" name="password">
+    <input type="submit" value="Login">
+  </form>
+</div>
   </body>
 </html>

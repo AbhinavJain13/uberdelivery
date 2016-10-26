@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>
+      register
+    </h1>
+    <div class="user">
+
+    <form class="" action="{% url 'user:register' %}" method="post">
+      {% csrf_token %}
+        <input type="text" name="f_name" placeholder="First_Name">
+        <input type="text" name="l_name" placeholder="last_name">
+        <input type="text" name="email" placeholder="email">
+        <input type="text" name="addr" placeholder="street address">
+        <input type="text" name="apt" placeholder="appartment/House Number">
+        <input type="text" name="city" placeholder="city">
+        <input type="text" name="state" placeholder="state">
+        <input type="text" name="zipcode" placeholder="zipcode">
+        <input type="tel" name="phone" placeholder="phone number">
+        <input type="Password" name="Password" placeholder="Password">
+        <input type="Password" name="cpassword" placeholder="confirm Password">
+        <input type="submit" value="Register">
+    </form>
+    </div>
+  </body>
+</html>
