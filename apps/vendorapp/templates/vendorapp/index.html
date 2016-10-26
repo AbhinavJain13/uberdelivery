@@ -5,6 +5,37 @@
     <title></title>
   </head>
   <body>
-    welcome vendor app
+    <h3>Hi Vendor, please register here</h3>
+    <div>
+      <form class="" action = "{% url 'vendor:next' %}" method="post">
+        {% csrf_token %}
+        <ul>
+            <li>First Name:<input type="text" name="f_name" value=""></li>
+            <li>Last Name:<input type="text" name="l_name" value=""></li>
+            <li>Email:<input type="text" name="email" value=""></li>
+            <li>Address: <input type="text" name="addr" value=""></li>
+            <li>Apt No: <input type="text" name="apt" value="" placeholder="apt/house No"></li>
+            <li>City:<input type="text" name="city" value=""></li>
+            <li>State:<input type="text" name="state" value=""></li>
+            <li>Zipcode:<input type="text" name = "zipcode" pattern="[0-9]{5}" title="Five digit zip code"></li>
+            <li>Password:<input type="password" name="password" value=""></li>
+            <li>Confirm Pw:<input type="password" name="cpassword" value=""></li>
+            <li>Phone Number:<input type="tel" name="phone" pattern = "(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}" title="Ten digit phone number" placeholder="123 345 6783"></li>
+            <li><input type="submit" name="next" value="Next"></li>
+        </ul>
+      </form>
+    </div>
+
+
+      {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}</li>
+
+            {% endfor %}
+        </ul>
+      {% endif %}
+
   </body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Restaurant details page</title>
+</head>
+<body>
+  <div class="">
+    <form class="" action= "{% url 'vendor:register' %}" method="post">
+      {% csrf_token %}
+      <ul>
+            <li>Restaurant Name: <input type="text" name="rest_name" value=""></li>
+            <li>Address: <input type="text" name="rest_addr" value=""></li>
+            <li>Apt No: <input type="text" name="apt" value="" placeholder="apt/house No"></li>
+            <li>City:<input type="text" name="city" value=""></li>
+            <li>State:<input type="text" name="state" value=""></li>
+            <li>Phone Number<input type="tel" name="phone" value=""></li>
+            <li>Cuisine Type <select class="" name="cuisine">
+              <option value="1">Italian</option>
+              <option value="2">Mexican</option>
+              <option value="3">Indian</option>
+            </select></li>
+
+            <li>Services<select name = "services">
+              <option value="pickup">PickUp</option>
+              <option value="delivery">Delivery</option>
+              <option value="both">Both</option>
+            </select></li>
+
+            <li>Delivery Area Range<select name = "drange">
+              <option value="1">1-5 miles</option>
+              <option value="2">5-10 miles</option>
+            </select></li>
+
+            {% for item,value in basic.items %}
+            <input type="hidden" name="{{item}}" value="{{value}}">
+            {% endfor %}
+            <li><input type="submit" name="register" value="Register"></li>
+        </ul>
+    </form>
+</div>
+
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}> {{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+
+</body>
+</html>
