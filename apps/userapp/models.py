@@ -11,6 +11,19 @@ from email.MIMEText import MIMEText
 
 # Create your models here.
 class UserManager(models.Manager):
+    def login(self,user):
+        print user
+        user_log=self.filter(email=user['email'])
+        if user_log and user_log[0].valid==True:
+            print user_log
+            pass2=user['password']
+            pass3=pass2.encode()
+            if bcrypt.hashpw(pass3,user_log[0].password.encode())== user_log[0].password:
+                print user_log[0].id
+                return {'user':user_log[0]}
+            # else:
+        return{'error':"email or password failed"}
+
     def mail(self,email):
         # EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
            server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -54,13 +67,11 @@ class UserManager(models.Manager):
             errors.append("invalid email or email cannot be blank")
         if len(param['addr'])<1:
             errors.append("address cannot be blank")
-        if len(param['apt'])<1:
-            errors.append("apt/house cannot be blank")
         if len(param['city'])<1:
             errors.append("city cannot be blank")
         if len(param['state'])<1:
             errors.append("state cannot be blank")
-        if len(param['zipcode'])<1:
+        if len(param['zipcode'])<5:
             errors.append("zipcode cannot be blank")
         if len(param['phone'])<10:
             errors.append("phone cannot be blank or less than 10 digits")
@@ -68,9 +79,9 @@ class UserManager(models.Manager):
             errors.append("password cannot be blank")
         if not param['cpassword']==param['password']:
             errors.append("password and confirm password do not match")
-        # if user>0:
-        #     errors.append("email already exist")
-        if len(errors)>0:
+        if user>0:
+            errors.append("email already exist")
+        if len(errrors)>0:
             return(False,errors)
         else:
             #call the mailing function
@@ -78,29 +89,30 @@ class UserManager(models.Manager):
             pass2=param['password']
             pass3=pass2.encode()
             hashed= bcrypt.hashpw(pass3,bcrypt.gensalt())
-            this_address=Address.objects.create(addr=param['addr'],apt=param['apt'],city=param['city'],state=param['state'],zipcode=param['zipcode'])
+            this_address= Address.objects.create(addressNumber=newaddress[0].get('AddressNumber',''), addressNumberPrefix=newaddress[0].get('AddressNumberPrefix',''), addressNumberSuffix=newaddress[0].get('AddressNumberSuffix',''), buildingName=newaddress[0].get('BuildingName',''), occupancyType=newaddress[0].get('OccupancyType',''), occupancyIdentifier=newaddress[0].get('OccupancyIdentifier',''), placeName=newaddress[0].get('PlaceName',''),
+            stateName=newaddress[0].get('StateName',''), streetName=newaddress[0].get('StreetName',''), streetNamePreDirectional=newaddress[0].get('StreetNamePreDirectional',''), streetNamePreType=newaddress[0].get('StreetNamePreType',''), streetNamePostDirectional=newaddress[0].get('streetNamePostDirectional',''), streetNamePostType= newaddress[0].get('StreetNamePostType',''),subaddressType=newaddress[0].get('SubaddressType',''), uSPSBoxType=newaddress[0].get('USPSBoxType',''), zipCode=newaddress[0].get('ZipCode',''))
             user=self.create(f_name=param['f_name'],l_name=param['l_name'],email=param['email'],code=email1[1]['code'],valid="False",password=hashed)
             user.address.add(this_address)
             return(True,user)
-    def login(self,user):
-        print user
-        user_log=self.filter(email=user['email'])
-        if user_log and user_log[0].valid==True:
-            print user_log
-            pass2=user['password']
-            pass3=pass2.encode()
-            if bcrypt.hashpw(pass3,user_log[0].password.encode())== user_log[0].password:
-                print user_log[0].id
-                return {'user':user_log[0]}
-            # else:
-        return{'error':"email or password failed"}
 
 class Address(models.Model):
-    addr=models.CharField(max_length=50)
-    apt=models.CharField(max_length=10)
-    city=models.CharField(max_length=20)
-    state=models.CharField(max_length=20)
-    zipcode=models.CharField(max_length=5)
+    addressNumber=models.CharField(max_length=10)
+    addressNumberPrefix=models.CharField(max_length=20)
+    addressNumberSuffix=models.CharField(max_length=20)
+    buildingName=models.CharField(max_length=10)
+    occupancyType=models.CharField(max_length=20)
+    occupancyIdentifier=models.CharField(max_length=20)
+    placeName=models.CharField(max_length=20)
+    stateName=models.CharField(max_length=20)
+    streetName=models.CharField(max_length=20)
+    streetNamePreDirectional=models.CharField(max_length=20)
+    streetNamePreType=models.CharField(max_length=20)
+    streetNamePostDirectional=models.CharField(max_length=20)
+    streetNamePostType=models.CharField(max_length=20)
+    subaddressType=models.CharField(max_length=20)
+    uSPSBoxType=models.CharField(max_length=20)
+    zipCode=models.CharField(max_length=5)
+
 class User(models.Model):
     f_name=models.CharField(max_length=30)
     l_name=models.CharField(max_length=30)

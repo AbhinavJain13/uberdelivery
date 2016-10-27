@@ -10,7 +10,7 @@
     <div class="wrapper">
     <div class="header">
       <h1>
-        Lunch 
+        Lunch
       </h1>
     <form   class="form1"action="{% url 'main:register' %}" method="post">
       {% csrf_token %}
@@ -39,15 +39,21 @@
       </select>
     <input type="submit" value="Login">
   </form>
+</div>
   <p>
     {{msg}}
-
-  </p>
+</p>
   <p>
     {{errors}}
 
   </p>
-
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}> {{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
 </div>
 </div>
   </body>

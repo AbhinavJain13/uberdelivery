@@ -4,10 +4,13 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     return render(request,"mainapp/index.html")
+
 def login(request):
     if request.method =="POST":
         if request.POST['member']=="vendor":
-            return redirect('vendor:index')
+            request.session['email'] = request.POST['email']
+            request.session['password'] = request.POST['password']
+            return redirect('vendor:login')
         else:
             user=User.objects.login(request.POST)
             # print type(user)
