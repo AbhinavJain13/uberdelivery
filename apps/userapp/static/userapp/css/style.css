@@ -1,4 +1,4 @@
-.login{
+.user{
   height: 400px;
   width: 500px;
   /*background-color: red;*/
@@ -15,11 +15,12 @@ body{
   display: inline-block;
   /*background-color: orange;*/
 }
-.form2{
-  height: 100px;
+.register{
+  height: 400px;
   width: 278px;
   display: block;
   text-align: right;
+  padding: 20px;
 }
 .form1{
   height: 44px;
@@ -28,5 +29,14 @@ body{
   text-align: right;
 }
 h1{
-display: inline-block;
+  display: inline-block;
+}
+.label1{
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 40px;
+}
+.form2{
+  margin-top: 10px;
+  margin-left: 20px;
 }

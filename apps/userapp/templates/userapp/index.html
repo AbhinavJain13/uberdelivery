@@ -7,6 +7,8 @@
     <title></title>
   </head>
   <body>
+    <div class="wrapper">
+
     <h1>
       register
     </h1>
@@ -14,21 +16,24 @@
 
     <form class="register" action="{% url 'user:register' %}" method="post">
       {% csrf_token %}
+      <label class="label1">
         <input type="text" name="f_name" placeholder="First_Name">
-        <input type="text" name="l_name" placeholder="last_name">
-        <input type="text" name="email" placeholder="email">
-        <input type="text" name="addr" placeholder="street address">
-        <input type="text" name="apt" placeholder="appartment/House Number">
-        <input type="text" name="city" placeholder="city">
-        <input type="text" name="state" placeholder="state">
-        <input type="text" name="zipcode" placeholder="zipcode">
-        <input type="tel" name="phone" placeholder="phone number">
-        <input type="password" name="password" placeholder="Password">
-        <input type="password" name="cpassword" placeholder="confirm Password">
+      </label>
+       <label class="label1"><input type="text" name="l_name" placeholder="last_name"></label>
+        <label class="label1"><input type="text" name="email" placeholder="email"></label>
+        <label class="label1"><input type="text" name="addr" placeholder="street address"></label>
+        <label class="label1"><input type="text" name="apt" placeholder="appartment/House Number"></label>
+        <label class="label1"><input type="text" name="city" placeholder="city"></label>
+        <label class="label1"><input type="text" name="state" placeholder="state"></label>
+        <label class="label1"><input type="text" name="zipcode" placeholder="zipcode"></label>
+        <label class="label1"><input type="tel" name="phone" placeholder="phone number"></label>
+        <label class="label1"><input type="password" name="password" placeholder="Password"></label>
+        <label class="label1"><input type="password" name="cpassword" placeholder="confirm Password"></label>
         <input type="submit" value="Register">
     </form>
+  </div>
 
-    <form  action="{% url 'user:code' %}" method="post">
+    <form   class="form2" action="{% url 'user:code' %}" method="post">
       {% csrf_token %}
       <input type="text" name="code">
       <input type="submit" value="Enter the verification code">
@@ -41,6 +46,6 @@
      {% endfor %}
    </ul>
    {% endif %}
-    </div>
+  </div>
   </body>
 </html>

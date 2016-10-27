@@ -5,6 +5,7 @@ import re
 import bcrypt
 import smtplib
 import getpass
+import usaddress
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
@@ -57,7 +58,7 @@ class UserManager(models.Manager):
 
     def validate(self,param):
         errors=[]
-        # user=User.objects.filter(email=param['email'])
+        user=User.objects.filter(email=param['email'])
         EMAIL_REGEX=re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
         if len(param['f_name'])<1 and len(param['f_name'])<3:
             errors.append("firstname cannot be blank or less then 3")
@@ -79,9 +80,9 @@ class UserManager(models.Manager):
             errors.append("password cannot be blank")
         if not param['cpassword']==param['password']:
             errors.append("password and confirm password do not match")
-        if user>0:
+        if user:
             errors.append("email already exist")
-        if len(errrors)>0:
+        if len(errors)>0:
             return(False,errors)
         else:
             #call the mailing function
@@ -89,6 +90,8 @@ class UserManager(models.Manager):
             pass2=param['password']
             pass3=pass2.encode()
             hashed= bcrypt.hashpw(pass3,bcrypt.gensalt())
+            newaddress = usaddress.tag(param['addr']+","+param['apt']+","+ param['city']+","+param['state']+","+param['zipcode'])
+            print "done"
             this_address= Address.objects.create(addressNumber=newaddress[0].get('AddressNumber',''), addressNumberPrefix=newaddress[0].get('AddressNumberPrefix',''), addressNumberSuffix=newaddress[0].get('AddressNumberSuffix',''), buildingName=newaddress[0].get('BuildingName',''), occupancyType=newaddress[0].get('OccupancyType',''), occupancyIdentifier=newaddress[0].get('OccupancyIdentifier',''), placeName=newaddress[0].get('PlaceName',''),
             stateName=newaddress[0].get('StateName',''), streetName=newaddress[0].get('StreetName',''), streetNamePreDirectional=newaddress[0].get('StreetNamePreDirectional',''), streetNamePreType=newaddress[0].get('StreetNamePreType',''), streetNamePostDirectional=newaddress[0].get('streetNamePostDirectional',''), streetNamePostType= newaddress[0].get('StreetNamePostType',''),subaddressType=newaddress[0].get('SubaddressType',''), uSPSBoxType=newaddress[0].get('USPSBoxType',''), zipCode=newaddress[0].get('ZipCode',''))
             user=self.create(f_name=param['f_name'],l_name=param['l_name'],email=param['email'],code=email1[1]['code'],valid="False",password=hashed)
