@@ -6,6 +6,8 @@
   </head>
   <body>
     welcome to user dashboard
+    <h1>Welcome login {{request.session.f_name}} {{request.session.userid}}</h1>
+    {{msg}}
     <form action="" method="post">
       {% csrf_token %}
       <select  name="service">
@@ -13,16 +15,13 @@
         <option value="delivery">delivery</option>
         <option value="both">Both</option>
       </select>
-      <select  name="range">
-        <option value="1">1-5 Miles</option>
-        <option value="2">5-10 Miles</option>
-      </select>
-      {% endif %}
-      <select  name="cuisine">
+      <input type="text" name="zip" placeholder="please enter the zip of your location">
+        <select  name="cuisine">
         <option value="1">Italian</option>
         <option value="2">Mexican</option>
         <option value="3">indian</option>
       </select>
+      <input type="submit" value="Filter">
     </form>
   </body>
 </html>

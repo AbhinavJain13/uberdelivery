@@ -1,0 +1,32 @@
+.login{
+  height: 400px;
+  width: 500px;
+  /*background-color: red;*/
+  display: inline-block;
+  border: 1px solid black;
+}
+.wrapper{
+  /*background-color: pink;*/
+  height: 700px;
+  width: 600px;
+  display: inline-block;
+}
+body{
+  display: inline-block;
+  /*background-color: orange;*/
+}
+.form2{
+  height: 100px;
+  width: 278px;
+  display: block;
+  text-align: right;
+}
+.form1{
+  height: 44px;
+  width: 278px;
+  display: inline-block;
+  text-align: right;
+}
+h1{
+display: inline-block;
+}

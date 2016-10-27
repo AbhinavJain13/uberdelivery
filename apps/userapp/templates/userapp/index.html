@@ -2,6 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'userapp/css/style.css' %}"media="screen" title="no title"  charset="utf-8">
     <title></title>
   </head>
   <body>
@@ -10,7 +12,7 @@
     </h1>
     <div class="user">
 
-    <form class="" action="{% url 'user:register' %}" method="post">
+    <form class="register" action="{% url 'user:register' %}" method="post">
       {% csrf_token %}
         <input type="text" name="f_name" placeholder="First_Name">
         <input type="text" name="l_name" placeholder="last_name">
@@ -21,10 +23,24 @@
         <input type="text" name="state" placeholder="state">
         <input type="text" name="zipcode" placeholder="zipcode">
         <input type="tel" name="phone" placeholder="phone number">
-        <input type="Password" name="Password" placeholder="Password">
-        <input type="Password" name="cpassword" placeholder="confirm Password">
+        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="cpassword" placeholder="confirm Password">
         <input type="submit" value="Register">
     </form>
+
+    <form  action="{% url 'user:code' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="code">
+      <input type="submit" value="Enter the verification code">
+
+    </form>
+    {% if messages %}
+   <ul class="messages">
+     {% for message in messages %}
+     <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+     {% endfor %}
+   </ul>
+   {% endif %}
     </div>
   </body>
 </html>

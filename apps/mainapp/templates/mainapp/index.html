@@ -2,19 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'mainapp/css/style.css' %}"media="screen" title="no title"  charset="utf-8">
     <title></title>
   </head>
   <body>
-    <h1>Karishma here</h1>
-    <h3>harshita here</h3>
-    welcome main app
-    <div class="login">
-
-    <h1>
-      Login
-
-    </h1>
-    <form  action="{% url 'main:register' %}" method="post">
+    <div class="wrapper">
+    <div class="header">
+      <h1>
+        Lunch 
+      </h1>
+    <form   class="form1"action="{% url 'main:register' %}" method="post">
       {% csrf_token %}
       <select name="member">
         <option value="vendor">Vendor</option>
@@ -22,21 +20,35 @@
       </select>
       <input type="submit" value="register">
     </form>
-
-    <form class="" action="{% url 'main:login' %}" method="post">
+    </div>
+    <div class="login">
+    <h1>
+      Login
+    </h1>
+    <form class="form2" action="{% url 'main:login' %}" method="post">
       {% csrf_token %}
-    <select  name="member">
-      <option value="user">User</option>
-      <option value="vendor">Vendor</option>
-    </select>
-    Email:<input type="text" name="email">
-    Password: <input type="Password" name="password">
+    <label>
+      Email:<input type="text" name="email">
+    </label>
+    <label>
+      Password: <input type="Password" name="password">
+    </label>
+      <select  name="member">
+        <option value="user">User</option>
+        <option value="vendor">Vendor</option>
+      </select>
     <input type="submit" value="Login">
   </form>
+  <p>
+    {{msg}}
+
+  </p>
+  <p>
+    {{errors}}
+
+  </p>
+
 </div>
-
-
-
-
+</div>
   </body>
 </html>
