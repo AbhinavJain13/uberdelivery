@@ -27,21 +27,15 @@ def next(request):
     'basic':info
     }
     result = Vendor.objects.reg_valid(request.POST)
+
     if result[0] == False:
         print_messages(request, result[1])
         return redirect('vendor:index')
 
-    newaddress = usaddress.tag(request.POST['addr']+","+request.POST['apt']+","+ request.POST['city']+","+request.POST['state']+","+request.POST['zipcode'])
-    print "done"
-
-    address = Address.objects.create(addressNumber=newaddress[0].get('AddressNumber',''), addressNumberPrefix=newaddress[0].get('AddressNumberPrefix',''), addressNumberSuffix=newaddress[0].get('AddressNumberSuffix',''), buildingName=newaddress[0].get('BuildingName',''), occupancyType=newaddress[0].get('OccupancyType',''), occupancyIdentifier=newaddress[0].get('OccupancyIdentifier',''), placeName=newaddress[0].get('PlaceName',''),
-    stateName=newaddress[0].get('StateName',''), streetName=newaddress[0].get('StreetName',''), streetNamePreDirectional=newaddress[0].get('StreetNamePreDirectional',''), streetNamePreType=newaddress[0].get('StreetNamePreType',''), streetNamePostDirectional=newaddress[0].get('streetNamePostDirectional',''), streetNamePostType= newaddress[0].get('StreetNamePostType',''),subaddressType=newaddress[0].get('SubaddressType',''), uSPSBoxType=newaddress[0].get('USPSBoxType',''), zipCode=newaddress[0].get('ZipCode',''))
     # address = Address.objects.create()
 
+    request.session['vid']= result[1].id
 
-    print vars(address)
-    print address.addressNumber
-    print address.placeName
     return render(request, "vendorapp/rest_details.html", context)
 
 
@@ -56,6 +50,8 @@ def register(request):
     if result[0] == False:
         print_messages(request, result[1])
         return render(request, "vendorapp/rest_details.html")
+    thisvendor=Vendor.objects.get(id = request.session['vid'])
+    thisvendor.rest.add(result[1])
     return render(request, 'vendorapp/success.html')
 
 
