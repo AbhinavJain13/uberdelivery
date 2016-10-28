@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Vendor
+from .models import Vendor, Menu
 from .models import Restaurant
 from ..userapp.models import Address
 from django.contrib import messages
@@ -52,6 +52,10 @@ def register(request):
         return render(request, "vendorapp/rest_details.html")
     thisvendor=Vendor.objects.get(id = request.session['vid'])
     thisvendor.rest.add(result[1])
+    print result[1]
+
+    print thisvendor.rest.all()
+
     return render(request, 'vendorapp/success.html')
 
 
@@ -66,12 +70,26 @@ def login(request):
     if result[0] == False:
         print_messages(request, result[1])
         return redirect('main:index')
+    request.session['id']=result[1].id
+    for rest in result[1].rest.all():
+        print rest.rest_name
     return login_success(request, result[1])
 
+def addmenu(request):
+    if request.method=='POST':
+        thisvendor = Vendor.objects.get(id = request.session['id'])
+        for rest in thisvendor.rest.all():
+            print rest.rest_name
+        # print thisvendor.rest.all
+        thisrest = Restaurant.objects.get(id = request.POST['rest'])
+        thismenu = Menu.objects.create(mon = request.POST['mon'], tues=request.POST['tues'], wed= request.POST['wed'], thurs= request.POST['thurs'], fri= request.POST['fri'], sat=request.POST['sat'], sun = request.POST['sun'], rest= thisrest)
+        context = {
+            'menu':thismenu
+        }
+        return render(request, 'vendorapp/dashboard.html', context)
+
 def login_success(request, vendor):
-    request.session['vendor'] = {
-        'id' : vendor.id,
-        'f_name' : vendor.f_name,
-        'email' : vendor.email,
+    context = {
+    'vendor' : Vendor.objects.get(id = request.session['id'])
     }
-    return render(request, "vendorapp/dashboard.html")
+    return render(request, "vendorapp/dashboard.html", context)

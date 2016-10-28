@@ -8,15 +8,34 @@
 
 </head>
 <body>
-  <h5>Hi {{request.session.vendor.f_name}}</h5>
+  <h5>Hi {{vendor.f_name}}</h5>
   <h4>Please enter your menu daywise</h4>
 
-  <form class="" action= method="post">
-    Monday:<textarea name="monday" rows="8" cols="40"></textarea>
-    Tuesday:<textarea name="tuesday" rows="8" cols="40"></textarea>
+
+
+  <form class="" action="{% url 'vendor:addmenu' %}" method="post">
+    {% csrf_token %}
+    <select class="" name="rest">
+      {% for rest in vendor.rest.all %}
+        <option value = {{rest.id}} >  {{rest.rest_name}}</option>
+      {% endfor %}
+    </select>
+    Monday:<textarea name="mon" rows="8" cols="40"></textarea>
+    Tuesday:<textarea name="tues" rows="8" cols="40"></textarea>
+    Wednesday:<textarea name="wed" rows="8" cols="40"></textarea>
+    Thursday:<textarea name="thurs" rows="8" cols="40"></textarea>
+    Friday:<textarea name="fri" rows="8" cols="40"></textarea>
+    Saturday:<textarea name="sat" rows="8" cols="40"></textarea>
+    Sunday:<textarea name="sun" rows="8" cols="40"></textarea>
     <input type="submit" name="add" value="Add">
+  </form>
+{{menu.mon}}
+
+  <form class="" action="" method="post">
+      {% csrf_token %}
     <input type="submit" name="edit" value="Edit">
   </form>
+
 
 
 </body>
