@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import User,Address
+from ..vendorapp.models import Restaurant
 from django.contrib import messages
 
 # Create your views here.
@@ -56,6 +57,17 @@ def code(request):
 
 def show(request):
     context={
-    'msg':"successful login"
+    'msg':"successful login",
+    'users':User.objects.get(id=request.session['userid'])
     }
     return render(request,"userapp/userdashboard.html",context)
+def filter_rest(request):
+    if request.method=="POST":
+        rests=Restaurant.objects.filter(services=request.POST['service']).filter(cuisine=request.POST['cuisine'])
+        # for rest in rests.address.all():
+        #     (rest.address.zipCode == request.POST['zip'])
+        print vars(rests)
+        context={
+        'rest':rests,
+        }
+        return render(request,"userapp/userdashboard.html",context)

@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^show$',views.show,name="show"),
     url(r'^register$',views.register,name="register"),
     url(r'^code$',views.code,name="code"),
-
+    url(r'^filter_rest$',views.filter_rest,name="filter_rest"),
 
 ]

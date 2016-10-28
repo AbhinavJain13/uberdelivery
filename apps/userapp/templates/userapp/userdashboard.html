@@ -8,7 +8,8 @@
     welcome to user dashboard
     <h1>Welcome login {{request.session.f_name}} {{request.session.userid}}</h1>
     {{msg}}
-    <form action="" method="post">
+    {{users.address}}
+    <form action="{% url 'user:filter_rest' %}" method="post">
       {% csrf_token %}
       <select  name="service">
         <option value="pick up">Pick Up</option>
@@ -25,5 +26,11 @@
       </select>
       <input type="submit" value="Filter">
     </form>
+    {{rest}}
+    <p>
+    {% for res in rest %}
+     {{res}}
+    {% endfor %}
+  </p>
   </body>
 </html>
