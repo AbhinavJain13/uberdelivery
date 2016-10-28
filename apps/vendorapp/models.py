@@ -5,8 +5,6 @@ import re, bcrypt
 import usaddress
 
 
-
-
 class RestaurantManager(models.Manager):
     def valid_inputs(self,rest_info):
         PHONE_REGEX=re.compile(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$')
@@ -32,12 +30,13 @@ class RestaurantManager(models.Manager):
             return(False, errors)
         else:
             newaddress = usaddress.tag(rest_info['addr']+","+rest_info['apt']+","+ rest_info['city']+","+rest_info['state']+","+rest_info['zipcode'])
+            print newaddress
             address = Address.objects.create(addressNumber=newaddress[0].get('AddressNumber',''), addressNumberPrefix=newaddress[0].get('AddressNumberPrefix',''), addressNumberSuffix=newaddress[0].get('AddressNumberSuffix',''), buildingName=newaddress[0].get('BuildingName',''), occupancyType=newaddress[0].get('OccupancyType',''), occupancyIdentifier=newaddress[0].get('OccupancyIdentifier',''), placeName=newaddress[0].get('PlaceName',''),
             stateName=newaddress[0].get('StateName',''), streetName=newaddress[0].get('StreetName',''), streetNamePreDirectional=newaddress[0].get('StreetNamePreDirectional',''), streetNamePreType=newaddress[0].get('StreetNamePreType',''), streetNamePostDirectional=newaddress[0].get('streetNamePostDirectional',''), streetNamePostType= newaddress[0].get('StreetNamePostType',''),subaddressType=newaddress[0].get('SubaddressType',''), uSPSBoxType=newaddress[0].get('USPSBoxType',''), zipCode=newaddress[0].get('ZipCode',''))
 
             rest = self.create(rest_name = rest_info['rest_name'], phone = rest_info['phone'], cuisine = rest_info['cuisine'], services = rest_info['services'], drange = rest_info['drange'])
             rest.address.add(address)
-            print rest.rest_name
+            
 
             return (True, rest)
 
@@ -51,6 +50,19 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = RestaurantManager()
+
+class Menu(models.Model):
+    mon=models.TextField()
+    tues=models.TextField()
+    wed=models.TextField()
+    thurs=models.TextField()
+    fri=models.TextField()
+    sat=models.TextField()
+    sun=models.TextField()
+    rest = models.ForeignKey(Restaurant, related_name="menus")
+
+
+
 
 
 class VendorManager(models.Manager):
